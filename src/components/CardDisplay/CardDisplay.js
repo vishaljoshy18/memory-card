@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
-import Card from './Card';
 import './CardDisplay.css';
 
-function CardDisplay({ incrementScore ,resetScore}) {
+function CardDisplay({ incrementScore, resetScore }) {
 	const [cards, setCards] = useState([
 		{ cardName: 'A', isCardSelected: false, cardIndex: 1 },
 		{ cardName: 'B', isCardSelected: false, cardIndex: 2 },
