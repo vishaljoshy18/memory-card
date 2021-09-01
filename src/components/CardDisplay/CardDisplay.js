@@ -3,21 +3,45 @@ import React, { useState } from 'react';
 import Card from './Card';
 import './CardDisplay.css';
 
-function CardDisplay() {
+function CardDisplay({ incrementScore ,resetScore}) {
 	const [cards, setCards] = useState([
-		{ cardName: 1, isCardSelected: false, cardIndex: 1 },
-		{ cardName: 2, isCardSelected: false, cardIndex: 2 },
-		{ cardName: 3, isCardSelected: false, cardIndex: 3 },
-		{ cardName: 4, isCardSelected: false, cardIndex: 4 },
+		{ cardName: 'A', isCardSelected: false, cardIndex: 1 },
+		{ cardName: 'B', isCardSelected: false, cardIndex: 2 },
+		{ cardName: 'C', isCardSelected: false, cardIndex: 3 },
+		{ cardName: 'D', isCardSelected: false, cardIndex: 4 },
 	]);
 
 	const shuffleCards = () => {
-		const shuffledCards = _.shuffle(cards);
+		const shuffledCards = _.shuffle([...cards]);
 		setCards(shuffledCards);
 	};
 
+	const selectCard = (index) => {
+		console.log(cards[index]);
+		const newCards = [...cards];
+		newCards[index].isCardSelected = true;
+		setCards(newCards);
+	};
+	const resetCards = () => {
+		const resetCards = [...cards];
+		resetCards.forEach((card) => {
+			card.isCardSelected = false;
+		});
+		setCards(resetCards);
+	};
+
 	const handleCardClick = (e, index) => {
-		shuffleCards();
+		if (cards[index].isCardSelected) {
+			console.log('selected');
+			resetScore();
+			resetCards();
+			shuffleCards();
+			console.log('reset', cards);
+		} else {
+			incrementScore();
+			selectCard(index);
+			shuffleCards();
+		}
 	};
 
 	return (
@@ -30,7 +54,7 @@ function CardDisplay() {
 						handleCardClick(e, index);
 					}}
 				>
-					<Card cardName={card.cardName} />
+					<div>Card:-{card.cardName}</div>
 				</div>
 			))}
 		</div>
